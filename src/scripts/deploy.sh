@@ -26,7 +26,7 @@ install_and_run_project() {
     cd $PROJECT_PATH
 
     echo "🛠 Starting project..."
-    ./ci_start.sh
+    ./ci_start.sh $PROJECT_NAME "true"
 
     echo "🛠 Deployment successful. Project is up and running!"
 }
@@ -36,13 +36,13 @@ update_and_restart_project() {
     cd $PROJECT_PATH
 
     echo "🛠 Stopping project with pm2..."
-    ./ci_stop.sh
+    ./ci_stop.sh $PROJECT_NAME
 
     echo "🛠 Pulling latest changes from GitHub..."
     git pull
 
     echo "🛠 Starting project..."
-    ./ci_start.sh
+    ./ci_start.sh $PROJECT_NAME "false"
 
     echo "🛠 Deployment successful. Project is up and running!"
 }
