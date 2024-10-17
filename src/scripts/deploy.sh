@@ -20,38 +20,31 @@ LOG_FILE="$PROJECT_PATH/deployment.log"
 
 # Функция для установки зависимостей и запуска проекта
 install_and_run_project() {
-    echo "🛠 Cloning project from GitHub...\n"
+    echo "🛠 Cloning project from GitHub..."
     git clone $GITHUB_REPO $PROJECT_PATH
 
     cd $PROJECT_PATH
 
-    echo "🛠 Installing dependencies...\n"
-    npm install
+    echo "🛠 Starting project..."
+    ./ci_start.sh
 
-    echo "🛠 Starting project with pm2...\n"
-    pm2 start npm --name $PROJECT_NAME -- run autodeploy-gh
-    pm2 restart $PROJECT_NAME --restart-delay=60000
-
-    echo "🛠 Deployment successful. Project is up and running!\n"
+    echo "🛠 Deployment successful. Project is up and running!"
 }
 
 # Функция для обновления проекта и зависимостей, а затем его перезапуска
 update_and_restart_project() {
     cd $PROJECT_PATH
 
-    echo "🛠 Stopping project with pm2...\n"
-    pm2 stop $PROJECT_NAME
+    echo "🛠 Stopping project with pm2..."
+    ./ci_stop.sh
 
-    echo "🛠 Pulling latest changes from GitHub...\n"
+    echo "🛠 Pulling latest changes from GitHub..."
     git pull
 
-    echo "🛠 Installing updated dependencies...\n"
-    npm install
+    echo "🛠 Starting project..."
+    ./ci_start.sh
 
-    echo "🛠 Starting project with pm2...\n"
-    pm2 start $PROJECT_NAME --restart-delay=60000
-
-    echo "🛠 Deployment successful. Project is up and running!\n"
+    echo "🛠 Deployment successful. Project is up and running!"
 }
 
 # Перенаправляем весь вывод в файл
