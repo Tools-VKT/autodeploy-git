@@ -18,6 +18,9 @@ GITHUB_REPO="https://github.com/$2.git"
 # Лог-файл
 LOG_FILE="$PROJECT_PATH/deployment.log"
 
+# Очищаем лог-файл перед запуском
+> $LOG_FILE
+
 # Функция для установки зависимостей и запуска проекта
 install_and_run_project() {
     echo "🛠 Cloning project from GitHub..."
